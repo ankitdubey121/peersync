@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/all.min.css" integrity="sha512-gMjQeDaELJ0ryCI+FtItusU9MkAifCZcGq789FrzkiM49D8lbDhoaUaIX4ASU187wofMNlgBJ4ckbrXM9sE6Pg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"
+        integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+"
+        crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.2/socket.io.js" integrity="sha512-jMNwWSmjje4fjYut9MBGKXw5FZA6D67NHAuC9szpjbbjg51KefquNfvn4DalCbGfkcv/jHsHnPo1o47+8u4biA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet" />
+    <title>PeerSync|Receiver</title>
+    <style>
+        svg .emptyInboxRotation {
+            -webkit-animation: rotation 2s linear infinite;
+            -o-animation: rotation 2s infinite linear;
+            animation: rotation 2s linear infinite;
+            -o-transform-origin: 50% 50%;
+            transform-origin: 50% 50%;
+            -webkit-transform-origin: 50% 50%;
+            -moz-transform-origin: 50% 50%;
+        }
+
+        @-webkit-keyframes rotation {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+
+            to {
+                -webkit-transform: rotate(359deg);
+            }
+        }
+
+        @-o-keyframes rotation {
+            0% {
+                -o-transform: rotate(0deg);
+            }
+
+            to {
+                -o-transform: rotate(359deg);
+            }
+        }
+
+        @keyframes rotation {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            to {
+                -webkit-transform: rotate(359deg);
+                -o-transform: rotate(359deg);
+                transform: rotate(359deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light container">
+        <a class="navbar-brand font-bold" href="index.html"><code class="font-weight-bold"
+                style="font-size: 20px">PeerSync</code></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Portfolio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <section class="container-fluid rounded " style="background: #21232a url(images/header-bg.jpg) repeat 0 0">
+        <div class="row justify-content-center align-items-center text-center">
+            <div class="col-md-2 col-12 text-center">
+                <p class="text-white bg-danger d-none" id="error-txt" style="width: auto; height: 2em">Wrong code</p>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center align-items-center rounded" style="
+          height: 350px;
+          background: #21232a url(images/header-bg.jpg) repeat 0 0;
+        ">
+            <div class="col-12 col-md-6 p-3 text-center p-md-5" style="border: 2px dashed #383b44">
+                <div id="roomcode-input-area">
+                    <h3 class="text-light">Enter room code to join sender's room</h3>
+                <div class="row justify-content-around text-center mt-4" >
+                    <div class="hi">
+                        <input type="text" name="room-code" id="roomCodeInput"
+                            style="border: none; height: max-content; line-height: 2em" class="rounded bg-light" />
+                    </div>
+                    <div class="bye">
+                        <button class="btn btn-md btn-primary" id='join-btn'>Join Room</button>
+                    </div>
+                </div>
+                </div>
+                <div id="roomjoinedinfo" class="d-none">
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="container-fluid mt-5 mb-5 d-none" id="receiverArea">
+        <div class="container" id="pre-received">
+            <div class="row text-center bg-light p-4">
+                <div class="col-12 pb-3 pt-3"><code style="font-size: 25px; padding: 10px; color: white; background-color: #21232a;" class="rounded">Files Received</code></div>
+                <div class="col-12 text-center">
+                <!-- <img src="/images/almost-there.gif" class="img-fluid" alt=""> -->
+                <i class="fas fa-file-alt fa-spin mt-4 mb-2" style="color: #b2bac7; font-size: 80px;"></i>
+                <p class="text-muted mt-4">Waiting for incoming files</p>
+                </div>
+            </div>
+        </div>
+        <div class="container" >
+            <div class="table-responsive">
+                <table class="table">
+                  <tbody id="post-received">
+                    
+                  </tbody>
+                </table>
+              </div>
+              
+    </section>
+</body>
+    <script src="receiver.js"></script>
+
+</html>

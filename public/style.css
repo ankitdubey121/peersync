@@ -1,0 +1,62 @@
+body {
+    font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    background-color: #fff;
+    height: 100vh;
+    position: relative; }
+  
+  p {
+    color: #b3b3b3;
+    font-weight: 300; }
+  
+  h1, h2, h3, h4, h5, h6,
+  .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; }
+  
+  a {
+    -webkit-transition: .3s all ease;
+    -o-transition: .3s all ease;
+    transition: .3s all ease; }
+    a, a:hover {
+      text-decoration: none !important; }
+  
+  .hero {
+    height: 100vh;
+    width: 100%;
+    /* background: #eb4d55; */
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+  
+
+.send-btn{
+    color: white;
+    background-color:  rgb(64, 91, 0);
+    width: 100px;
+    padding: 10px;
+    text-align: center;
+    font-size: 18px;
+}
+
+.receive-btn{
+    color: white;
+    background-color:rgb(64, 91, 0);
+    width: 100px;
+    padding: 10px;
+    text-align: center;
+    font-size: 18px;
+}
+
+
+/* .fade-in {
+    opacity: 0.3;
+    transition: all 1s ease;
+}
+
+.fade-in .show {
+    opacity: 1;
+} */
+
+/*  rgb(59, 81, 0) 
+    rgb(157, 170, 179)
+    rgb(64, 91, 0)
+*/

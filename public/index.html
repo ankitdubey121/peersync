@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"
+        integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+"
+        crossorigin="anonymous"></script>
+    <title>PeerSync</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .fade-in {
+            opacity: 0;
+            transition: opacity 0.7s linear;
+        }
+
+        .show {
+            opacity: 1;
+        }
+        .hero {
+            background-color: rgb(157, 170, 179); 
+            transition: background-color 0.7s linear; 
+        }
+        .hero h4{
+            transition: all 0.7s linear;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light container">
+        <a class="navbar-brand font-bold" href="index.html"><code class=" font-weight-bold" style="font-size: 20px;">PeerSync</code></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Portfolio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    </header>
+    <div class="hero">
+        <div class="container d-md-block d-flex align-items-center">
+            <div class="row justify-content-center align-items-center p-0 p-md-5">
+                <div class="col-md-6 d-none d-md-block">
+                    <img id="image" src="" class="img-fluid fade-in" alt="">
+                </div>
+                <div class="row col-md-6 col-12 p-2 text-center">
+                    <code class="text-left p-5 text-center" id="hero-txt" style="width: 100%; font-size: 45px;"></code>
+                    <div class="col-6 text-center">
+                        <button class="btn btn-md send-btn"> <a class="text-reset" href="/sender.html">Send</a></button>
+                    </div>
+                    <div class="col-6 text-center">
+                        <button class="btn btn-md receive-btn"><a class="text-reset" href="/receiver.html">Receive</a></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+        integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js"
+        integrity="sha512-TPh2Oxlg1zp+kz3nFA0C5vVC6leG/6mm1z9+mA81MI5eaUVqasPLO8Cuk4gMF4gUfP5etR73rgU/8PNMsSesoQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.sticky/1.0.4/jquery.sticky.min.js"
+        integrity="sha512-QABeEm/oYtKZVyaO8mQQjePTPplrV8qoT7PrwHDJCBLqZl5UmuPi3APEcWwtTNOiH24psax69XPQtEo5dAkGcA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+    var images = [
+        { src: "/images/try.png", bgColor: "rgb(157, 170, 179)" },
+        { src: "/images/try2.png", bgColor: "#F2EBE3" },
+        { src: "/images/try3.png", bgColor: "#111" },
+        { src: "/images/try4.png", bgColor: "#B8A7BA" }
+    ];
+    var texts = [
+        { text: "Peer 2 Peer", color: "#111" },
+        { text: "Person 2 Person", color: "#9040CD" },
+        { text: "Pal to Pal", color: "#fff" },
+        { text: "Parallel-to-Parallel", color: "##420803" }
+    ];
+
+    // Get the image element and hero div
+    var imgElement = document.getElementById("image");
+    var heroDiv = document.querySelector(".hero");
+    var heroText = document.getElementById('hero-txt');
+    // Initialize index
+    var index = 0;
+
+    // Function to change the image source and background color
+    function changeImage() {
+        // Add fade-in class to the image
+
+        // Wait for the fade-in animation to complete
+        setTimeout(function () {
+            // Set the new image source and background color
+            imgElement.src = images[index].src;
+            heroDiv.style.backgroundColor = images[index].bgColor;
+            heroText.innerHTML = texts[index].text;
+            heroText.style.color = texts[index].color;
+            // Increment the index
+            index++;
+
+            // Reset the index if it exceeds the array length
+            if (index >= images.length) {
+                index = 0;
+            }
+
+            // Remove the fade-in class to trigger the animation again
+            imgElement.classList.remove("fade-in");
+            // Add the show class to trigger the fade-in animation
+            imgElement.classList.add("show");
+            console.log(heroText)
+            // Call the changeImage function again after 6 seconds
+            setTimeout(changeImage, 6000);
+        }, 500);
+    }
+
+    // Initial call to changeImage function
+    changeImage();
+});
+
+    </script>
+</body>
+
+</html>
+</body>
+
+</html>
