@@ -1,4 +1,4 @@
-const socket = io("http://localhost:3000");
+const socket = io("https://peersync.onrender.com");
 function generateUUID() {
   var code = "";
   for (var i = 0; i < 3; i++) {
