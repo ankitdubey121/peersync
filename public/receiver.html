@@ -21,49 +21,36 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet" />
     <title>PeerSync|Receiver</title>
     <style>
-        svg .emptyInboxRotation {
-            -webkit-animation: rotation 2s linear infinite;
-            -o-animation: rotation 2s infinite linear;
-            animation: rotation 2s linear infinite;
-            -o-transform-origin: 50% 50%;
-            transform-origin: 50% 50%;
-            -webkit-transform-origin: 50% 50%;
-            -moz-transform-origin: 50% 50%;
+        #join-btn{
+            background-color: #6D9886;
+            border-radius: 2px;
+            border-style: none;
+            box-sizing: border-box;
+            color: #fff;
+            cursor: pointer;
+            display: inline-block;
+            font-family: "Farfetch Basis", "Helvetica Neue", Arial, sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            margin: 0;
+            max-width: none;
+            min-height: 40px;
+            min-width: 10px;
+            outline: none;
+            overflow: hidden;
+            padding: 9px 20px 8px;
+            position: relative;
+            text-align: center;
+            text-transform: none;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+            width: 100%;
         }
 
-        @-webkit-keyframes rotation {
-            0% {
-                -webkit-transform: rotate(0deg);
-            }
-
-            to {
-                -webkit-transform: rotate(359deg);
-            }
-        }
-
-        @-o-keyframes rotation {
-            0% {
-                -o-transform: rotate(0deg);
-            }
-
-            to {
-                -o-transform: rotate(359deg);
-            }
-        }
-
-        @keyframes rotation {
-            0% {
-                -webkit-transform: rotate(0deg);
-                -o-transform: rotate(0deg);
-                transform: rotate(0deg);
-            }
-
-            to {
-                -webkit-transform: rotate(359deg);
-                -o-transform: rotate(359deg);
-                transform: rotate(359deg);
-            }
-        }
+        #join-btn:hover{
+            opacity: 0.75;
+    }
     </style>
 </head>
 
@@ -101,7 +88,7 @@
     <section class="container-fluid rounded " style="background: #21232a url(images/header-bg.jpg) repeat 0 0">
         <div class="row justify-content-center align-items-center text-center">
             <div class="col-md-2 col-12 text-center">
-                <p class="text-white bg-danger d-none" id="error-txt" style="width: auto; height: 2em">Wrong code</p>
+                <p class="text-white bg-danger rounded d-none" id="error-txt" style="width: auto; height: 2em">Wrong code</p>
             </div>
         </div>
         <div class="d-flex justify-content-center align-items-center rounded" style="
@@ -117,7 +104,7 @@
                             style="border: none; height: max-content; line-height: 2em" class="rounded bg-light" />
                     </div>
                     <div class="bye">
-                        <button class="btn btn-md btn-primary" id='join-btn'>Join Room</button>
+                        <button class=" text-white" style="background-color: #6D9886; " id='join-btn'>Join Room</button>
                     </div>
                 </div>
                 </div>

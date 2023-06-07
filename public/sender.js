@@ -1,4 +1,5 @@
 const socket = io("https://peersync.onrender.com");
+// const socket = io("http://localhost:3000")
 function generateUUID() {
   var code = "";
   for (var i = 0; i < 3; i++) {
@@ -34,6 +35,16 @@ receiverID = "";
 socket.emit("create-room", { senderID });
 
 socket.on("init", () => {
+  const postReceiverJoined = document.getElementById('post-receiver-joined')
+  postReceiverJoined.classList.remove('d-none', 'justify-content-around');
+  postReceiverJoined.classList.add('justify-content-between')
+  const preReceiverJoined = document.getElementById('pre-receiver-joined')
+  preReceiverJoined.classList.add('d-none')
+  const successTxt = document.getElementById('success-txt');
+  successTxt.classList.remove('d-none');
+  setTimeout(() => {
+    successTxt.classList.add("d-none");
+  }, 3000);
   console.log("One receiver joined sucessfully")
 });
 
@@ -41,7 +52,8 @@ const fileInput = document.getElementById("fileInput");
 const sendbtn = document.getElementById("send-btn");
 sendbtn.addEventListener("click", (event) => {
   const numFiles = fileInput.files.length;
-  console.log(fileInput.files);
+  if(numFiles != 0){
+    console.log(fileInput.files);
   console.log("Number of files selected:", numFiles);
   const formData = new FormData();
   for (let i = 0; i < numFiles; i++) {
@@ -64,6 +76,9 @@ sendbtn.addEventListener("click", (event) => {
     .catch((error) => {
       console.error("An error occurred during file upload:", error);
     });
+  }else{
+    alert("Please select files to send")
+  }
 });
 
 socket.on("room-created", (roomCode) => {

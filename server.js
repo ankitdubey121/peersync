@@ -6,8 +6,7 @@ const path = require("path");
 const http = require("http").Server(app);
 const io = require("socket.io")(http);
 const upload = multer({
-  dest: "uploads/",
-  limits: { fileSize: 3 * 1024 * 1024 * 1024 },
+  dest: "uploads/"
 });
 const folderPath = path.join(__dirname, "/uploads");
 roomCode = "";
@@ -49,7 +48,6 @@ app.get("/sender", (req, res) => {
 
 app.post("/upload", upload.array("files[]", 10), (req, res) => {
   const files = req.files;
-
   // Process each uploaded file
   files.forEach((file) => {
     const filePath = file.path;

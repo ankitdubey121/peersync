@@ -28,11 +28,13 @@
         .show {
             opacity: 1;
         }
+
         .hero {
-            background-color: rgb(157, 170, 179); 
-            transition: background-color 0.7s linear; 
+            background-color: rgb(157, 170, 179);
+            transition: background-color 0.7s linear;
         }
-        .hero h4{
+
+        .hero h4 {
             transition: all 0.7s linear;
         }
     </style>
@@ -40,7 +42,8 @@
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light container">
-        <a class="navbar-brand font-bold" href="index.html"><code class=" font-weight-bold" style="font-size: 20px;">PeerSync</code></a>
+        <a class="navbar-brand font-bold" href="index.html"><code class=" font-weight-bold"
+                style="font-size: 20px;">PeerSync</code></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -81,12 +84,21 @@
                         <button class="btn btn-md send-btn"> <a class="text-reset" href="/sender.html">Send</a></button>
                     </div>
                     <div class="col-6 text-center">
-                        <button class="btn btn-md receive-btn"><a class="text-reset" href="/receiver.html">Receive</a></button>
+                        <button class="btn btn-md receive-btn"><a class="text-reset"
+                                href="/receiver.html">Receive</a></button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <footer>
+        <div class="row p-0 m-0"
+            style="position: fixed; bottom: 0; width: 100%; text-align: center;  background: #21232a url(images/header-bg.jpg) repeat 0 0;">
+            <div class="col-12 p-3"><code class="text-muted" style="font-size: 18px;">PeerSync&copy; 2023 </code></div>
+        </div>
+    </footer>
+
+    <!-- Script files -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
         integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -98,58 +110,58 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-    var images = [
-        { src: "/images/try.png", bgColor: "rgb(157, 170, 179)" },
-        { src: "/images/try2.png", bgColor: "#F2EBE3" },
-        { src: "/images/try3.png", bgColor: "#111" },
-        { src: "/images/try4.png", bgColor: "#B8A7BA" }
-    ];
-    var texts = [
-        { text: "Peer 2 Peer", color: "#111" },
-        { text: "Person 2 Person", color: "#9040CD" },
-        { text: "Pal to Pal", color: "#fff" },
-        { text: "Parallel-to-Parallel", color: "##420803" }
-    ];
+            var images = [
+                { src: "/images/try.png", bgColor: "rgb(157, 170, 179)" },
+                { src: "/images/try2.png", bgColor: "#F2EBE3" },
+                { src: "/images/try3.png", bgColor: "#111" },
+                { src: "/images/try4.png", bgColor: "#B8A7BA" }
+            ];
+            var texts = [
+                { text: "Peer 2 Peer", color: "#111" },
+                { text: "Person 2 Person", color: "#9040CD" },
+                { text: "Pal to Pal", color: "#fff" },
+                { text: "Parallel-to-Parallel", color: "##420803" }
+            ];
 
-    // Get the image element and hero div
-    var imgElement = document.getElementById("image");
-    var heroDiv = document.querySelector(".hero");
-    var heroText = document.getElementById('hero-txt');
-    // Initialize index
-    var index = 0;
+            // Get the image element and hero div
+            var imgElement = document.getElementById("image");
+            var heroDiv = document.querySelector(".hero");
+            var heroText = document.getElementById('hero-txt');
+            // Initialize index
+            var index = 0;
 
-    // Function to change the image source and background color
-    function changeImage() {
-        // Add fade-in class to the image
+            // Function to change the image source and background color
+            function changeImage() {
+                // Add fade-in class to the image
 
-        // Wait for the fade-in animation to complete
-        setTimeout(function () {
-            // Set the new image source and background color
-            imgElement.src = images[index].src;
-            heroDiv.style.backgroundColor = images[index].bgColor;
-            heroText.innerHTML = texts[index].text;
-            heroText.style.color = texts[index].color;
-            // Increment the index
-            index++;
+                // Wait for the fade-in animation to complete
+                setTimeout(function () {
+                    // Set the new image source and background color
+                    imgElement.src = images[index].src;
+                    heroDiv.style.backgroundColor = images[index].bgColor;
+                    heroText.innerHTML = texts[index].text;
+                    heroText.style.color = texts[index].color;
+                    // Increment the index
+                    index++;
 
-            // Reset the index if it exceeds the array length
-            if (index >= images.length) {
-                index = 0;
+                    // Reset the index if it exceeds the array length
+                    if (index >= images.length) {
+                        index = 0;
+                    }
+
+                    // Remove the fade-in class to trigger the animation again
+                    imgElement.classList.remove("fade-in");
+                    // Add the show class to trigger the fade-in animation
+                    imgElement.classList.add("show");
+                    console.log(heroText)
+                    // Call the changeImage function again after 6 seconds
+                    setTimeout(changeImage, 6000);
+                }, 500);
             }
 
-            // Remove the fade-in class to trigger the animation again
-            imgElement.classList.remove("fade-in");
-            // Add the show class to trigger the fade-in animation
-            imgElement.classList.add("show");
-            console.log(heroText)
-            // Call the changeImage function again after 6 seconds
-            setTimeout(changeImage, 6000);
-        }, 500);
-    }
-
-    // Initial call to changeImage function
-    changeImage();
-});
+            // Initial call to changeImage function
+            changeImage();
+        });
 
     </script>
 </body>

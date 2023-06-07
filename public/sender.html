@@ -6,6 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/all.min.css"
+        integrity="sha512-gMjQeDaELJ0ryCI+FtItusU9MkAifCZcGq789FrzkiM49D8lbDhoaUaIX4ASU187wofMNlgBJ4ckbrXM9sE6Pg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
@@ -15,7 +18,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"
         integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+"
         crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.2/socket.io.js" integrity="sha512-jMNwWSmjje4fjYut9MBGKXw5FZA6D67NHAuC9szpjbbjg51KefquNfvn4DalCbGfkcv/jHsHnPo1o47+8u4biA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.2/socket.io.js"
+        integrity="sha512-jMNwWSmjje4fjYut9MBGKXw5FZA6D67NHAuC9szpjbbjg51KefquNfvn4DalCbGfkcv/jHsHnPo1o47+8u4biA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet" />
     <title>PeerSync|Sender</title>
@@ -26,9 +31,20 @@
             margin: 0;
         }
 
+        #animate-text {
+            animation: rotateDiagonal 2s infinite;
+        }
+
+        @keyframes rotateDiagonal {
+            0% {
+                transform: rotateZ("-45deg");
+            }
+        }
+
         /* CSS */
         .copyBtn {
-            background-color: #222;
+            /* background-color: #222; */
+            background-color: #6d9886;
             border-radius: 2px;
             border-style: none;
             box-sizing: border-box;
@@ -59,12 +75,13 @@
             opacity: 0.75;
         }
 
-        #labelForFileInput{
+        #labelForFileInput {
             border-radius: 10px;
             font-size: 20px;
             background-color: darkgreen;
         }
-        #labelForFileInput:hover{
+
+        #labelForFileInput:hover {
             cursor: grab;
         }
 
@@ -73,9 +90,37 @@
                 width: 100%;
             }
         }
-        @media screen and (min-width:400px) {
-            #roomcodeinfo{
+
+        @media screen and (min-width: 400px) {
+            #roomcodeinfo {
                 width: 70%;
+            }
+        }
+
+        code {
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .dot-animation {
+            font-size: 18px;
+            animation: dotAnimation 1s infinite; 
+        }
+
+        @keyframes dotAnimation {
+            0% {
+                opacity: 0.4;
+                transform: scale(0.2);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(0.6);
+            }
+
+            100% {
+                opacity: 0.4;
+                transform: scale(1);
             }
         }
     </style>
@@ -83,8 +128,7 @@
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light container">
-        <a class="navbar-brand font-bold" href="index.html"><code class="font-weight-bold"
-                style="font-size: 20px">BitSync</code></a>
+        <a class="navbar-brand font-bold" href="index.html"><code>PeerSync  </code></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -112,35 +156,59 @@
             </ul>
         </div>
     </nav>
-    <section class="sender-container container p-0 mt-4">
+    <div class="row justify-content-center align-items-center text-center">
+        <div class="col-md-2 col-12 text-center">
+            <p class="text-white bg-success rounded d-none pt-1" id="success-txt" style="width: auto; height: 2em">
+                Receiver Joined
+            </p>
+        </div>
+    </div>
+    <section class="sender-container container-fluid container-md p-0 mt-4">
         <div class="row p-0 m-0">
-            <div class="col-lg-6 col-12 d-none d-lg-block">
+            <!-- <div class="col-lg-6 col-12 d-none d-lg-flex justify-content-center align-items-center">
                 <video preload="auto" src="/images/send-fly-video.mp4" class="w-full" autoplay muted
                     loop></video>
-            </div>
-            <div class="row col-lg-6 col-12 d-flex align-items-center justify-content-center p-4 m-0 p-lg-0 rounded bg-dark"
-                style="border-radius: 20%; min-height: 600px">
-                <div class="card" style="width: 70%">
+            </div> -->
+            <div class="row col-12 d-flex flex-column align-items-center justify-content-around p-4 m-0 p-lg-0 rounded"
+                style="
+            border-radius: 20%;
+            min-height: 600px;
+            background: #21232a url(images/header-bg.jpg) repeat 0 0;
+          ">
+                <div class="card d-none" id="post-receiver-joined" style="width: 70%">
                     <div class="card-header">Upload Files</div>
                     <div class="card-body">
-                        <input type="file" style="display: none" multiple name="file" id="fileInput" />
+                        <input type="file" style="display: none" required multiple name="file" id="fileInput" />
                         <h5 class="" style="border-radius: 10px; background-color: darkgreen"></h5>
                         <div class="d-flex justify-content-center">
-                            <label for="fileInput" id="labelForFileInput" class="card-title text-white text-center p-2 text-center w-75">Choose Files here</label>
+                            <label for="fileInput" id="labelForFileInput"
+                                class="card-title text-white text-center p-2 text-center w-75">Choose Files here</label>
                         </div>
-                        <p class="card-text">
-                            You can choose maximum of 10 files at a time
+                        <p class="card-text text-center text-muted">
+                            <!-- You can choose maximum of 10 files at a time Max upload limit is 2GB -->
+                            Max Files : 10, Max Size : 2GB
                         </p>
                         <div class="d-flex justify-content-center">
-                            <button id="send-btn" class="btn btn-primary">Send Files</button>
+                            <button id="send-btn" class="btn btn-primary">
+                                Send Files
+                            </button>
                         </div>
                     </div>
                 </div>
-                <div class="row" id="roomcodeinfo">
-                    <div class="col-8 text-center text-md-left text-white pl-0 pt-1" style="font-size: 20px">
-                        Room code : <span id="room-code"></span>
+                <div class="row" id="pre-receiver-joined">
+                    <div class="col-12 text-white">
+                        <code class="text-white">Waiting for receiver to join
+                <span class="dot-animation d-none d-md-inline">.</span>
+                <span class="dot-animation d-none d-md-inline">.</span>
+                <span class="dot-animation d-none d-md-inline">.</span>
+              </code>
                     </div>
-                    <div class="col-4 p-0 text-right text-md-center text-white" style="font-size: 20px">
+                </div>
+                <div class="row justify-content-center" id="roomcodeinfo">
+                    <div class="col-8 text-center text-md-left text-white pl-0 pt-1" style="font-size: 20px">
+                        <span class="d-none d-md-inline">Room code :</span> <span id="room-code"></span>
+                    </div>
+                    <div class="col-4 col-md-2 p-0 text-right text-md-center text-white" style="font-size: 20px">
                         <button id="copy-btn" class="copyBtn" role="button" onclick="copyRoomCode()">
                             Copy
                         </button>
@@ -149,7 +217,11 @@
             </div>
         </div>
     </section>
-    <script src="sender.js"></script>
+    <footer>
+        <div class="row p-0 m-0" style="position: fixed; bottom: 0; width: 100%; text-align: center;  background: #21232a url(images/header-bg.jpg) repeat 0 0;">
+            <div class="col-12 p-3"><code class="text-muted" style="font-size: 18px;">PeerSync&copy; 2023 </code></div>
+        </div>
+    </footer>
 </body>
-
+<script src="sender.js"></script>
 </html>

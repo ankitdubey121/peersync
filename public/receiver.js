@@ -1,5 +1,5 @@
 const socket = io("https://peersync.onrender.com");
-
+// const socket = io("http://localhost:3000")
 receiverID = "";
 
 const joinBtn = document.getElementById("join-btn");
@@ -54,11 +54,11 @@ socket.on("file-transfer", (fileData) => {
   const fileName = limitToTenChar(fileData.name)
   filesContainer.innerHTML += `
   <tr class="text-center bg-light p-4 justify-content-center align-items-center">
-  <td style="font-size: 20px">${fileName}</td>
-  <td>${mimeType}</td>
+  <td class="fs-3">${fileName}</td>
+  <td class="fs-4">${mimeType}</td>
   <td>
     <a id="download-btn" href="${URL.createObjectURL(blob)}" download="${fileName}.${extension}">
-      <button class="btn text-white btn-primary btn-md">Download</button>
+      <button class="btn text-white btn-primary btn-sm">Download</button>
     </a>
   </td>
 </tr>
