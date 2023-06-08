@@ -115,26 +115,30 @@
         </div>
     </section>
     <section class="container-fluid mt-5 mb-5 d-none" id="receiverArea">
-        <div class="container" id="pre-received">
+        <div class="container">
             <div class="row text-center bg-light p-4">
                 <div class="col-12 pb-3 pt-3"><code style="font-size: 25px; padding: 10px; color: white; background-color: #21232a;" class="rounded">Files Received</code></div>
-                <div class="col-12 text-center">
+                <div class="table-responsive mt-3">
+                    <table class="table">
+                      <tbody id="post-received">
+                        
+                      </tbody>
+                    </table>
+                </div>
+                <div class="col-12 text-center" id="pre-received">
                 <!-- <img src="/images/almost-there.gif" class="img-fluid" alt=""> -->
                 <i class="fas fa-file-alt fa-spin mt-4 mb-2" style="color: #b2bac7; font-size: 80px;"></i>
                 <p class="text-muted mt-4">Waiting for incoming files</p>
                 </div>
             </div>
         </div>
-        <div class="container" >
-            <div class="table-responsive">
-                <table class="table">
-                  <tbody id="post-received">
-                    
-                  </tbody>
-                </table>
-              </div>
-              
     </section>
+    <footer>
+        <div class="row p-0 m-0"
+            style="position: fixed; bottom: 0; width: 100%; text-align: center;  background: #21232a url(images/header-bg.jpg) repeat 0 0;">
+            <div class="col-12 p-3"><code class="text-muted" style="font-size: 18px;">PeerSync&copy; 2023 </code></div>
+        </div>
+    </footer>
 </body>
     <script src="receiver.js"></script>
 

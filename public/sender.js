@@ -12,6 +12,11 @@ function generateUUID() {
   return code.slice(0, -1); // Remove the trailing dash
 }
 
+function convertToGB(fileSizeKB) {
+  const fileSizeGB = fileSizeKB / (1024 * 1024 * 1024);
+  return fileSizeGB.toFixed(2); // Round to 2 decimal places
+}
+
 const senderID = generateUUID();
 function copyRoomCode() {
   const copyBtn = document.getElementById("copy-btn");
@@ -51,13 +56,27 @@ socket.on("init", () => {
 const fileInput = document.getElementById("fileInput");
 const sendbtn = document.getElementById("send-btn");
 sendbtn.addEventListener("click", (event) => {
-  const numFiles = fileInput.files.length;
+  const files = fileInput.files;
+  let totalSize = 0;
+
+  for (let i = 0; i < files.length; i++) {
+    totalSize += files[i].size;
+  }
+  totalSize = convertToGB(totalSize)
+  console.log(totalSize);
+  if(totalSize >=2 ){
+    alert("File size should be less than 2GB");
+    fileInput.value = ""
+  }
+  else{
+    const numFiles = files.length;
+  console.log(files.size)
   if(numFiles != 0){
-    console.log(fileInput.files);
+    console.log(files);
   console.log("Number of files selected:", numFiles);
   const formData = new FormData();
   for (let i = 0; i < numFiles; i++) {
-    const file = fileInput.files[i];
+    const file = files[i];
     const fileName = file.name;
     formData.append("files[]", file, fileName);
   }
@@ -69,6 +88,7 @@ sendbtn.addEventListener("click", (event) => {
     .then((response) => {
       if (response.ok) {
         console.log("File uploaded successfully");
+        alert("File Sent");
       } else {
         console.error("File upload failed");
       }
@@ -79,6 +99,8 @@ sendbtn.addEventListener("click", (event) => {
   }else{
     alert("Please select files to send")
   }
+  }
+  
 });
 
 socket.on("room-created", (roomCode) => {
