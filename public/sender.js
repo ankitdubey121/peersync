@@ -14,7 +14,11 @@ function generateUUID() {
 
 function convertToGB(fileSizeKB) {
   const fileSizeGB = fileSizeKB / (1024 * 1024 * 1024);
-  return fileSizeGB.toFixed(2); // Round to 2 decimal places
+  return fileSizeGB.toFixed(4); // Round to 2 decimal places
+}
+function convertToMB(fileSizeKB){
+  const fileSizeMB = fileSizeKB / (1024 * 1024);
+  return fileSizeMB.toFixed(4); // Round to 2 decimal places
 }
 
 const senderID = generateUUID();
@@ -45,15 +49,26 @@ socket.on("init", () => {
   postReceiverJoined.classList.add('justify-content-between')
   const preReceiverJoined = document.getElementById('pre-receiver-joined')
   preReceiverJoined.classList.add('d-none')
-  const successTxt = document.getElementById('success-txt');
-  successTxt.classList.remove('d-none');
+  const successTxtContainer = document.getElementById('success-txt-container')
+  const successTxt = document.getElementById('success-txt-p');
+  successTxt.classList.remove('bg-danger');
+  successTxtContainer.classList.remove('d-none')
+  successTxt.classList.add('bg-success')
+  successTxt.innerText = "Receiver Joined"
   setTimeout(() => {
-    successTxt.classList.add("d-none");
+    successTxtContainer.classList.add("d-none");
   }, 3000);
   console.log("One receiver joined sucessfully")
 });
 
 const fileInput = document.getElementById("fileInput");
+
+fileInput.addEventListener('change', (e)=>{
+  const numFiles = fileInput.files.length;
+  const numFileInfo = document.getElementById('num-file-info')
+  numFileInfo.innerHTML =  `${numFiles} File(s) Uploaded <i class="fas fa-check text-success"></i>` ;
+})
+
 const sendbtn = document.getElementById("send-btn");
 sendbtn.addEventListener("click", (event) => {
   const files = fileInput.files;
@@ -62,17 +77,24 @@ sendbtn.addEventListener("click", (event) => {
   for (let i = 0; i < files.length; i++) {
     totalSize += files[i].size;
   }
-  totalSize = convertToGB(totalSize)
+  if(totalSize > 500000){
+    totalSize = convertToGB(totalSize)
+  }else{
+    totalSize = convertToMB(totalSize);
+  }
   console.log(totalSize);
   if(totalSize >=2 ){
     alert("File size should be less than 2GB");
     fileInput.value = ""
   }
   else{
-    const numFiles = files.length;
-  console.log(files.size)
+  const startTime = performance.now();
+  const numFiles = files.length;
   if(numFiles != 0){
-    console.log(files);
+  sendbtn.innerHTML = `Sending
+  <div class="spinner-border-sm spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>`;
   console.log("Number of files selected:", numFiles);
   const formData = new FormData();
   for (let i = 0; i < numFiles; i++) {
@@ -80,7 +102,7 @@ sendbtn.addEventListener("click", (event) => {
     const fileName = file.name;
     formData.append("files[]", file, fileName);
   }
-
+  
   fetch("/upload", {
     method: "POST",
     body: formData,
@@ -88,7 +110,19 @@ sendbtn.addEventListener("click", (event) => {
     .then((response) => {
       if (response.ok) {
         console.log("File uploaded successfully");
-        alert("File Sent");
+        const endTime = performance.now();
+
+        // Calculate elapsed time in milliseconds
+        const elapsedTime = endTime - startTime;
+      
+        // Convert elapsed time to seconds
+        const elapsedSeconds = elapsedTime / 1000;
+      
+        console.log();
+        const numFileInfo = document.getElementById('num-file-info')
+        numFileInfo.innerHTML =`${numFiles} files Sent [${totalSize}GB] in ${elapsedSeconds} seconds ⚡️`;
+        sendbtn.innerText = 'Send File(s)'
+        fileInput.value = ""
       } else {
         console.error("File upload failed");
       }
@@ -107,3 +141,21 @@ socket.on("room-created", (roomCode) => {
   const roomcode = document.getElementById('room-code');
   roomcode.innerText = senderID;
 });
+
+socket.on('left', (data)=>{
+  console.log("Left")
+  if(data != socket.id){
+    const successTxtContainer = document.getElementById('success-txt-container')
+    successTxtContainer.classList.remove('d-none');
+    const successTxt = document.getElementById('success-txt-p');
+    successTxt.classList.remove('bg-success');
+    successTxt.classList.add('bg-danger')
+    successTxt.innerText = "Receiver left"
+  }
+})
+
+function alertsDisplayNone(){
+  var successTxtContainer = document.getElementById('success-txt-container');
+  successTxtContainer.classList.add('d-none')
+  console.log("clicked")
+}

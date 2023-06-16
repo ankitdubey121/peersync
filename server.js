@@ -48,11 +48,11 @@ app.get("/sender", (req, res) => {
 
 app.post("/upload", upload.array("files[]", 10), (req, res) => {
   const files = req.files;
+  console.log(req.files.length)
   // Process each uploaded file
   files.forEach((file) => {
     const filePath = file.path;
     let mimeType = file.mimetype;
-
     if (mimeType.includes("document")) {
       mimeType = "document/docx";
     }
@@ -76,6 +76,7 @@ app.post("/upload", upload.array("files[]", 10), (req, res) => {
         data: fileData,
         mimeType: mimeType,
         name: name,
+        length: 3
       });
     });
   });
@@ -127,6 +128,7 @@ io.on("connection", (socket) => {
 
   socket.on("disconnect", () => {
     console.log(socket.id + " Disconnected..");
+    io.to(roomCode).emit('left', socket.id);
     clearFolder(folderPath);
   });
 });

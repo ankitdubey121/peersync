@@ -1,6 +1,48 @@
 const socket = io("https://peersync.onrender.com");
 // const socket = io("http://localhost:3000")
 receiverID = "";
+numFilesReceived = 0
+// Input sanitation
+const roomCodeInput = document.getElementById('roomCodeInput');
+roomCodeInput.addEventListener('keyup', (e)=>{
+  let userInput = e.target.value
+  if(userInput.length == 2 || userInput.length == 5){
+    userInput += "-"
+  }
+  if(userInput.length > 8){
+    newValue = userInput.slice(0, 8)
+    roomCodeInput.value = newValue
+  }
+  else{
+    roomCodeInput.value = userInput
+  }
+})
+
+function downloadAll(){
+  var divElement = document.getElementById('post-received');
+  var anchorTags = divElement.getElementsByTagName('a');
+  
+  var hrefs = Array.from(anchorTags).map(function(anchor) {
+    return anchor.getAttribute('href');
+  });
+
+  var downloads = Array.from(anchorTags).map(function(download){
+    return download.getAttribute('download')
+  })
+  
+  console.log(hrefs);
+  console.log(downloads)
+
+  for (var i = 0; i < hrefs.length; i++) {
+    var link = document.createElement('a');
+    link.href = hrefs[i];
+    link.download = downloads[i]; // Optional: Set a custom download filename if needed
+    link.style.display = 'none';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+}
 
 const joinBtn = document.getElementById("join-btn");
 
@@ -63,7 +105,8 @@ socket.on("file-transfer", (fileData) => {
   </td>
 </tr>
   `;
-
+  numFilesReceived += 1;
+  console.log(numFilesReceived)
   const downloadButton = document.getElementById('download-btn');
   downloadButton.addEventListener("click", () => {
     setTimeout(() => {
@@ -72,7 +115,27 @@ socket.on("file-transfer", (fileData) => {
   });
 
   filesContainer.appendChild(document.createElement("br"));
+  if(numFilesReceived.toString() === fileData.length.toString()){
+    console.log("Hello")
+    const downloadAllBtnContainer = document.getElementById('downloadAllBtnContainer')
+    const downloadAllBtn = document.createElement('button')
+    downloadAllBtn.innerText = "Download All"
+    downloadAllBtn.id = 'downloadAllBtn'
+    downloadAllBtn.classList.add('btn', 'btn-primary', 'btn-sm')
+    downloadAllBtnContainer.appendChild(downloadAllBtn)
+    downloadAllBtn.onclick = downloadAll
+  }else{
+    console.log("not matched")
+  }
 });
 
+// Alert when sender leaves the room
 
+socket.on('left', (data)=>{
+  if(data != socket.id){
+    const errorTxt = document.getElementById('error-txt')
+    errorTxt.innerText = "Sender left the room"
+    errorTxt.classList.remove("d-none");
+  }
+})
 
