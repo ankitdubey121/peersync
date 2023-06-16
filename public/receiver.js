@@ -1,5 +1,5 @@
-const socket = io("https://peersync.onrender.com");
-// const socket = io("http://localhost:3000")
+// const socket = io("https://peersync.onrender.com");
+const socket = io("http://localhost:3000")
 receiverID = "";
 numFilesReceived = 0
 // Input sanitation
